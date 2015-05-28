@@ -9,13 +9,13 @@ namespace PcCOnfig.Model
 {
     public class ComponentContext : DbContext
     {
-        public virtual DbSet<Cpu> Cpus { get; set; }
-        public virtual DbSet<Ram> Rams { get; set; }
-        public virtual DbSet<Hdd> HardDrives { get; set; }
-        public virtual DbSet<Motherboard.Motherboard> MotherBoards { get; set; }
-        public virtual DbSet<PowerSupply> PowerSupplies { get; set; }
-        public virtual DbSet<GraphicCard> GraphicCards { get; set; }
-        public virtual DbSet<Box.Box> Boxes { get; set; }
-        public virtual DbSet<ComputerConfiguration.ComputerConfiguration> ComputerConfigurations { get; set; }
+        public  DbSet<Cpu> Cpus { get; set; }
+        public  DbSet<Ram> Rams { get; set; }
+        public  DbSet<Hdd> HardDrives { get; set; }
+        public DbSet<Motherboard.Motherboard> MotherBoards { get; set; }
+        public  DbSet<PowerSupply> PowerSupplies { get; set; }
+        public  DbSet<GraphicCard> GraphicCards { get; set; }
+        public  DbSet<Box.Box> Boxes { get; set; }
+        public  DbSet<ComputerConfiguration.ComputerConfiguration> ComputerConfigurations { get; set; }
     }
 }

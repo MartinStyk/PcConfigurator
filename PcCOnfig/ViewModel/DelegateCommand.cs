@@ -21,6 +21,7 @@ namespace PcCOnfig.ViewModel
         {
             return true;
         }
+        //never used, but inherited from ICommand
         public event EventHandler CanExecuteChanged;
     }
 }
