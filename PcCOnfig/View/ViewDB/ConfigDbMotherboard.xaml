@@ -1,0 +1,91 @@
+﻿<UserControl x:Class="PcCOnfig.View.ViewDB.ConfigDbMotherboard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" 
+             d:DesignHeight="1024"
+             d:DesignWidth="1024">
+
+    <Grid>
+        <Grid.Resources>
+            <ControlTemplate x:Key="LeftErrorTemplate">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="{Binding AdornedElement.(Validation.Errors).[0].ErrorContent, ElementName=ErrorAdorner}" Foreground="Red" VerticalAlignment="Center"/>
+                    <AdornedElementPlaceholder x:Name="ErrorAdorner">
+                        <Border BorderBrush="Red" BorderThickness="0" />
+                    </AdornedElementPlaceholder>
+                </StackPanel>
+            </ControlTemplate>
+        </Grid.Resources>
+
+        <DataGrid x:Name="MotherboardTable" ItemsSource="{Binding Path=Data}" SelectedItem="{Binding SelectedItem}"  Style="{StaticResource DataGridStyle}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Manufacturer" Binding="{Binding Manufacturer}"/>
+                <DataGridTextColumn Header="Hard Drive Connection" Binding="{Binding HardDriveConnectionType}" />
+                <DataGridTextColumn Header="Cpu Connection" Binding="{Binding CpuConnectionType}" />
+                <DataGridTextColumn Header="Ram Connection" Binding="{Binding RamConnectionType}" />
+                <DataGridTextColumn Header="Ram Slots" Binding="{Binding RamConnectionNumber}" />
+                <DataGridTextColumn Header="Graphic Connection" Binding="{Binding GraphicsConnectionType}" />
+                <DataGridTextColumn Header="Power Consumption" Binding="{Binding PowerConsumption, StringFormat={}{0} W}" />
+                <DataGridTextColumn Header="Price" Binding="{Binding Price, StringFormat={}{0} €}" />
+                <DataGridTextColumn Header="Info" Binding="{Binding Info}" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <TextBlock HorizontalAlignment="Left" Margin="10,40,0,0" TextWrapping="Wrap" Text="Manufacturer" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="169,40,0,0" TextWrapping="Wrap" Text="{Binding Manufacturer, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Mode=TwoWay}" Validation.ErrorTemplate="{StaticResource LeftErrorTemplate}" VerticalAlignment="Top" Width="120"/>
+
+        <TextBlock HorizontalAlignment="Left" Margin="10,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="Name"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="169,80,0,0" TextWrapping="Wrap" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Mode=TwoWay}" Validation.ErrorTemplate="{StaticResource LeftErrorTemplate}"  VerticalAlignment="Top" Width="120"/>
+
+        <TextBlock HorizontalAlignment="Left" Margin="10,120,0,0" TextWrapping="Wrap" Text="Price [€]" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="169,120,0,0" TextWrapping="Wrap" Text="{Binding Price, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Mode=TwoWay}" Validation.ErrorTemplate="{StaticResource LeftErrorTemplate}" VerticalAlignment="Top" Width="120"/>
+
+        <TextBlock HorizontalAlignment="Left" Margin="10,160,0,0" TextWrapping="Wrap" Text="Cpu Connection Type" VerticalAlignment="Top"/>
+        <ComboBox HorizontalAlignment="Left" Margin="169,160,0,0" Text="{Binding CpuConnection , UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Mode=TwoWay}" Validation.ErrorTemplate="{StaticResource LeftErrorTemplate}" VerticalAlignment="Top" Width="120" >
+            <ComboBoxItem Name="Socket775">Socket775</ComboBoxItem>
+            <ComboBoxItem Name="Socket1150">Socket1150</ComboBoxItem>
+            <ComboBoxItem Name="Socket1155">Socket1155</ComboBoxItem>
+        </ComboBox>
+        <TextBlock HorizontalAlignment="Left" Margin="10,200,0,0" TextWrapping="Wrap" Text="Ram Connection Type" VerticalAlignment="Top"/>
+        <ComboBox HorizontalAlignment="Left" Margin="169,200,0,0" Text="{Binding RamConnection , UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Mode=TwoWay}" Validation.ErrorTemplate="{StaticResource LeftErrorTemplate}" VerticalAlignment="Top" Width="120" >
+            <ComboBoxItem >DDR</ComboBoxItem>
+            <ComboBoxItem >DDR2</ComboBoxItem>
+            <ComboBoxItem >DDR3</ComboBoxItem>
+        </ComboBox>
+
+        <TextBlock HorizontalAlignment="Left" Margin="10,240,0,0" TextWrapping="Wrap" Text="Hd Connection Type" VerticalAlignment="Top"/>
+        <ComboBox HorizontalAlignment="Left" Margin="169,240,0,0" Text="{Binding HdConnection , UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Mode=TwoWay}" Validation.ErrorTemplate="{StaticResource LeftErrorTemplate}" VerticalAlignment="Top" Width="120" >
+            <ComboBoxItem >SATA</ComboBoxItem>
+            <ComboBoxItem >ESATA</ComboBoxItem>
+            <ComboBoxItem >ATA</ComboBoxItem>
+            <ComboBoxItem >SCSI</ComboBoxItem>
+            <ComboBoxItem >SASI</ComboBoxItem>
+            <ComboBoxItem >SAS</ComboBoxItem>
+        </ComboBox>
+        <TextBlock HorizontalAlignment="Left" Margin="10,280,0,0" TextWrapping="Wrap" Text="Graphic Card Connection" VerticalAlignment="Top"/>
+        <ComboBox HorizontalAlignment="Left" Margin="169,280,0,0" Text="{Binding GraphicConnection , UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Mode=TwoWay}" Validation.ErrorTemplate="{StaticResource LeftErrorTemplate}" VerticalAlignment="Top" Width="120" >
+            <ComboBoxItem>AGP</ComboBoxItem>
+            <ComboBoxItem>PCI_EXPRESS</ComboBoxItem>
+            <ComboBoxItem>PCI</ComboBoxItem>
+            <ComboBoxItem>UPA</ComboBoxItem>
+            <ComboBoxItem>USB</ComboBoxItem>
+        </ComboBox>
+
+        <TextBlock HorizontalAlignment="Left" Margin="10,320,0,0" TextWrapping="Wrap" Text="Power Consumption [W]" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="169,320,0,0" Text="{Binding PowerConsumption,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Mode=TwoWay}" Validation.ErrorTemplate="{StaticResource LeftErrorTemplate}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+
+
+        <TextBlock HorizontalAlignment="Left" Margin="10,360,0,0" TextWrapping="Wrap" Text="Number of Ram Slots" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="169,360,0,0" Text="{Binding RamConnectionNumber , UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Mode=TwoWay}" Validation.ErrorTemplate="{StaticResource LeftErrorTemplate}" VerticalAlignment="Top" Width="120" >
+
+        </TextBox>
+
+        <TextBlock HorizontalAlignment="Left" Margin="10,400,0,0" TextWrapping="Wrap" Text="Info" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="169,400,0,0" TextWrapping="Wrap" Text="{Binding Info,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Mode=TwoWay}" Validation.ErrorTemplate="{StaticResource LeftErrorTemplate}" VerticalAlignment="Top" Width="120" Height="60"/>
+        <Button Content="Save" Command="{Binding AddCommand}" Style="{StaticResource SaveBtnStyle}" />
+        <Button Content="Delete Selected" Command="{Binding DeleteCommand}" Style="{StaticResource SaveBtnStyle}" Margin="0,0,10,10" HorizontalAlignment="Right" />
+
+    </Grid>
+</UserControl>

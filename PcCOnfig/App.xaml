@@ -1,0 +1,48 @@
+﻿<Application x:Class="PcCOnfig.App"
+              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="View\MainWindow.xaml"
+             >
+    <Application.Resources>
+
+        <Style x:Key="DataGridRowStyle" TargetType="DataGridRow" BasedOn="{StaticResource {x:Type DataGridRow}}">
+            <Style.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="CornflowerBlue" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="CornflowerBlue" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="White" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.ControlTextBrushKey}" Color="White" />
+            </Style.Resources>
+        </Style>
+
+        <Style x:Key="DataGridCellStyle" TargetType="DataGridCell">
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+        <Style x:Key="DataGridStyle" TargetType="DataGrid">
+            <Setter Property="ColumnHeaderHeight" Value="30" />
+            <Setter Property="ColumnWidth" Value="*" />
+            <Setter Property="RowHeight" Value="23" />
+            <Setter Property="Background" Value="AliceBlue" />
+            <Setter Property="AlternatingRowBackground" Value="Cornsilk"/>
+            <Setter Property="AlternationCount" Value="2"/>
+            <Setter Property="AutoGenerateColumns" Value="False" />
+            <Setter Property="Margin" Value="318,0,0,0" />
+            <Setter Property="CanUserAddRows" Value="False" />
+            <Setter Property="CanUserReorderColumns" Value="False" />
+            <Setter Property="CanUserDeleteRows" Value="False" />
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="SelectionMode" Value="Single" />
+            <Setter Property="RowStyle" Value="{StaticResource DataGridRowStyle}" />
+            <Setter Property="CellStyle" Value="{StaticResource DataGridCellStyle}" />
+        </Style>
+
+
+        <Style x:Key="SaveBtnStyle" TargetType="Button">
+            <Setter Property="Background" Value="WhiteSmoke" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="Margin" Value="52,0,0,10" />
+            <Setter Property="VerticalAlignment" Value="Bottom" />
+            <Setter Property="Width" Value="211"/>
+            <Setter Property="Height" Value="26"/>
+        </Style>
+    </Application.Resources>
+</Application>

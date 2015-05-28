@@ -1,0 +1,12 @@
+﻿<Window x:Class="PcCOnfig.View.ViewPC.PcWizardDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Configuration Wizard" 
+        xmlns:view="clr-namespace:PcCOnfig.View.ViewPC"  
+        ShowInTaskbar="False"
+        Icon="/Resources/icon.png"
+        WindowStartupLocation="CenterScreen">
+
+    <view:PcWizardView/>
+
+</Window>

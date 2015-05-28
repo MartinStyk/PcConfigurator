@@ -1,0 +1,143 @@
+﻿<UserControl x:Class="PcCOnfig.View.ViewPC.PcWizardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:view="clr-namespace:PcCOnfig.View.ViewPC"
+             xmlns:viewModel="clr-namespace:PcCOnfig.ViewModel.ViewModelPC"
+             >
+    <UserControl.Background>
+        <ImageBrush ImageSource="/Resources/background.png" />
+    </UserControl.Background>
+
+    <UserControl.Resources>
+
+        <!-- map a ViewModel to a View. -->
+
+        <DataTemplate DataType="{x:Type viewModel:WelcomePageViewModel}">
+            <view:WelcomePageView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:MotherboardPageViewModel}">
+            <view:WizardMotherboardPage />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:CpuPageViewModel}">
+            <view:WizardCpuPageView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:RamPageViewModel}">
+            <view:WizardRamPage />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:PowerSupplyPageViewModel}">
+            <view:WizardPowerSupplyPageView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:HddPageViewModel}">
+            <view:WizardHddPageView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:FinalPageViewModel}">
+            <view:WizardFinalPageView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:BoxPageViewModel}">
+            <view:WizardBoxPage />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:GraphicCardPageViewModel}">
+            <view:WizardGraphicCardPage />
+        </DataTemplate>
+
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Padding" Value="3.5,0" />
+            <Setter Property="Margin" Value="3.5" />
+            <Setter Property="MinWidth" Value="80" />
+        </Style>
+
+        <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="{x:Type Button}" x:Key="MoveNextButtonStyle">
+            <Setter Property="Content" Value="Next" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=IsOnLastPage}" Value="True">
+                    <Setter Property="Content" Value="Finish" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        
+        <!-- HEADERED CONTENT CONTROL STYLE -->
+        <Style TargetType="{x:Type HeaderedContentControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type HeaderedContentControl}">
+                        <StackPanel Margin="2,0">
+                            <Grid Margin="1,1,1,12" RenderTransformOrigin="0.5,0.5">
+                                <Rectangle Fill="BurlyWood" Height="3" Margin="10,0" Opacity="0.6" RadiusX="8" RadiusY="8" VerticalAlignment="Bottom" />
+                                <ContentPresenter ContentSource="Header" TextBlock.FontSize="22" TextBlock.FontWeight="DemiBold" TextBlock.Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                <Grid.Effect>
+                                    <DropShadowEffect Opacity="0.1" />
+                                </Grid.Effect>
+                            </Grid>
+                            <Grid>
+                                <Rectangle Fill="{TemplateBinding Background}" />
+                                <ContentPresenter ContentSource="Content" />
+                            </Grid>
+                        </StackPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- WIZARD STEP TEMPLATE -->
+        <DataTemplate x:Key="WizardStepTemplate">
+            <Border x:Name="bdOuter" BorderBrush="Black" BorderThickness="0,0,1,1" CornerRadius="2" Margin="1,1,1,12" Opacity="0.25" SnapsToDevicePixels="True">
+                <Border x:Name="bdInner" Background="White" BorderBrush="Black" BorderThickness="2,2,1,1" CornerRadius="2" Padding="2">
+                    <TextBlock x:Name="txt" Margin="4,0,0,0" Text="{Binding Path=DisplayName}" />
+                </Border>
+            </Border>
+
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding Path=IsCurrentPage}" Value="True">
+                    <Setter TargetName="txt" Property="FontWeight" Value="Bold" />
+                    <Setter TargetName="bdInner" Property="Background" Value="White" />
+                    <Setter TargetName="bdOuter" Property="Opacity"  Value="1" />
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+    </UserControl.Resources>
+
+
+
+    <Grid Background="#11000000" Margin="1">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+
+        <!-- WIZARD STEP LISTING -->
+        <HeaderedContentControl Header="Steps">
+            <ItemsControl  ItemsSource="{Binding Path=Pages}" ItemTemplate="{StaticResource WizardStepTemplate}"/>
+        </HeaderedContentControl>
+
+        <!-- CURRENT PAGE AREA -->
+        <Border Background="White" Grid.Column="1" Grid.Row="0">
+            <HeaderedContentControl Content="{Binding Path=CurrentPage}" Header="{Binding Path=CurrentPage.DisplayName}" />
+        </Border>
+
+        <Border Grid.Column="0" Grid.Row="1" Background="LightGray" Grid.ColumnSpan="2" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <!-- NAVIGATION BUTTONS -->
+                <Grid Grid.Column="2" Grid.IsSharedSizeScope="True" HorizontalAlignment="Right" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition SharedSizeGroup="Buttons" />
+                        <ColumnDefinition SharedSizeGroup="Buttons" />
+                        <ColumnDefinition Width="11" />
+                        <ColumnDefinition SharedSizeGroup="Buttons" />
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="1" Grid.Row="0" Command="{Binding Path=MoveNextCommand}" Style="{StaticResource MoveNextButtonStyle}"/>
+                    <Button Grid.Column="3" Grid.Row="0" Command="{Binding Path=CancelCommand}" Content="Cancel" />
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

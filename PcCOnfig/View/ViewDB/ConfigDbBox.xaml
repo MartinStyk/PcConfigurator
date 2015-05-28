@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="PcCOnfig.View.ViewDB.ConfigDbBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" 
+             d:DesignHeight="1024"
+             d:DesignWidth="1024">
+    <Grid>
+        <Grid.Resources>
+            <ControlTemplate x:Key="LeftErrorTemplate">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="{Binding AdornedElement.(Validation.Errors).[0].ErrorContent, ElementName=ErrorAdorner}" Foreground="Red" VerticalAlignment="Center"/>
+                    <AdornedElementPlaceholder x:Name="ErrorAdorner">
+                        <Border BorderBrush="Red" BorderThickness="0" />
+                    </AdornedElementPlaceholder>
+                </StackPanel>
+            </ControlTemplate>
+        </Grid.Resources>
+
+        <DataGrid x:Name="BoxTable" ItemsSource="{Binding Path=Data}" SelectedItem="{Binding SelectedItem}" Style="{StaticResource DataGridStyle}">
+            <DataGrid.Columns >
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Manufacturer" Binding="{Binding Manufacturer}"/>
+                <DataGridTextColumn Header="Height" Binding="{Binding Height,StringFormat={}{0} cm}" />
+                <DataGridTextColumn Header="Width" Binding="{Binding Width,StringFormat={}{0} cm}" />
+                <DataGridTextColumn Header="Depth" Binding="{Binding Depth,StringFormat={}{0} cm}" />
+                <DataGridTextColumn Header="Price" Binding="{Binding Price, StringFormat={}{0} €}" />
+                <DataGridTextColumn Header="Info" Binding="{Binding Info}" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <TextBlock HorizontalAlignment="Left" Margin="10,40,0,0" TextWrapping="Wrap" Text="Manufacturer" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="169,40,0,0" TextWrapping="Wrap" Text="{Binding Manufacturer, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Mode=TwoWay}" Validation.ErrorTemplate="{StaticResource LeftErrorTemplate}" VerticalAlignment="Top" Width="120"/>
+
+        <TextBlock HorizontalAlignment="Left" Margin="10,80,0,0" TextWrapping="Wrap" Text="Name" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="169,80,0,0" TextWrapping="Wrap" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Mode=TwoWay}" Validation.ErrorTemplate="{StaticResource LeftErrorTemplate}" VerticalAlignment="Top" Width="120"/>
+
+        <TextBlock HorizontalAlignment="Left" Margin="10,120,0,0" TextWrapping="Wrap" Text="Price [€]" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="169,120,0,0" TextWrapping="Wrap" Text="{Binding Price, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Mode=TwoWay}" Validation.ErrorTemplate="{StaticResource LeftErrorTemplate}" VerticalAlignment="Top" Width="120"/>
+
+        <TextBlock HorizontalAlignment="Left" Margin="10,160,0,0" TextWrapping="Wrap" Text="Height [cm]" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="169,160,0,0" TextWrapping="Wrap" Text="{Binding Height, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Mode=TwoWay}" Validation.ErrorTemplate="{StaticResource LeftErrorTemplate}"  VerticalAlignment="Top" Width="120"/>
+
+        <TextBlock HorizontalAlignment="Left" Margin="10,200,0,0" TextWrapping="Wrap" Text="Width [cm]" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="169,200,0,0" TextWrapping="Wrap" Text="{Binding Width, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Mode=TwoWay}" Validation.ErrorTemplate="{StaticResource LeftErrorTemplate}" VerticalAlignment="Top" Width="120"/>
+
+        <TextBlock HorizontalAlignment="Left" Margin="10,240,0,0" TextWrapping="Wrap" Text="Depth [cm]" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="169,240,0,0" TextWrapping="Wrap" Text="{Binding Depth, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Mode=TwoWay}" Validation.ErrorTemplate="{StaticResource LeftErrorTemplate}" VerticalAlignment="Top" Width="120"/>
+
+
+
+
+        <TextBlock HorizontalAlignment="Left" Margin="10,280,0,0" TextWrapping="Wrap" Text="Info" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="169,280,0,0" TextWrapping="Wrap" Text="{Binding Info,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Mode=TwoWay}" Validation.ErrorTemplate="{StaticResource LeftErrorTemplate}" VerticalAlignment="Top" Width="120" Height="60"/>
+        <Button Content="Save" Command="{Binding AddCommand}" Style="{StaticResource SaveBtnStyle}"  />
+        <Button Content="Delete Selected" Command="{Binding DeleteCommand}" Style="{StaticResource SaveBtnStyle}" Margin="0,0,10,10" HorizontalAlignment="Right"  />
+
+    </Grid>
+</UserControl>

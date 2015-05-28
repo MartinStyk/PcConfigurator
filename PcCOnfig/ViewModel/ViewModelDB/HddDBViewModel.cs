@@ -1,0 +1,196 @@
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using PcCOnfig.Model;
+using PcCOnfig.Model.hdd;
+
+namespace PcCOnfig.ViewModel.ViewModelDB
+{
+    class HddDbViewModel : ConfigDbComponentsCommonPresenter
+    {
+        #region properties
+      
+        private string _connectionType;
+        public string ConnectionType
+        {
+            get
+            {
+                return _connectionType;
+            }
+            set
+            {
+                _connectionType = value;
+                RaisePropertyChangedEvent("ConnectionType");
+            }
+        }
+        private string _type;
+        public string HdType
+        {
+            get
+            {
+                return _type;
+            }
+            set
+            {
+                _type = value;
+                RaisePropertyChangedEvent("HdType");
+            }
+        }
+        private string _capacity;
+        public string Capacity
+        {
+            get
+            {
+                return _capacity;
+            }
+            set
+            {
+                _capacity = value;
+                RaisePropertyChangedEvent("Capacity");
+            }
+        }
+       
+        #endregion Properties
+
+        public HddDbViewModel()
+        {
+            using (var db = new ComponentContext())
+            {
+                var res = db.HardDrives.Cast<Hdd>().Where(x => x.IsDeleted == false);
+                Data = new ObservableCollection<ComputerComponent>(res);
+            }
+        }
+
+        protected override void Add()
+        {
+            Hdd drive = new Hdd();
+
+            drive.Manufacturer = Manufacturer;
+            drive.Name = Name;
+            drive.Info = Info;
+
+            int powCons;
+            if (!Int32.TryParse(PowerConsumption, out powCons))
+            {
+                return;
+            }
+            drive.PowerConsumption = powCons;
+
+            double cap;
+            if (!Double.TryParse(Capacity, out cap))
+            {
+                return;
+            }
+            drive.Capacity = cap;
+
+            decimal price;
+            if (!Decimal.TryParse(Price, out price))
+            {
+                return;
+            }
+            drive.Price = price;
+
+            HardDriveConnectionEnum connection;
+            if (!Enum.TryParse(ConnectionType, out connection))
+            {
+                return;
+            }
+            drive.ConnectionType = connection;
+
+            HardDriveTypeEnum type;
+            if (!Enum.TryParse(HdType, out type))
+            {
+                return;
+            }
+            drive.Type = type;
+
+            using (var db = new ComponentContext())
+            {
+                db.HardDrives.Add(drive);
+                db.SaveChanges();
+                Data.Add(drive);
+            }
+            Name = String.Empty;
+            Manufacturer = String.Empty;
+            Price = String.Empty;
+            Info = String.Empty;
+            ConnectionType = String.Empty;
+            HdType = String.Empty;
+            PowerConsumption = String.Empty;
+        }
+       
+        #region validation
+
+        public override string this[string columnName]
+        {
+            get
+            {
+                string errorMessage = string.Empty;
+
+                switch (columnName)
+                {
+                    case "Manufacturer":
+                        errorMessage = ValidateManufacturer();
+                        break;
+
+                    case "Name":
+                        errorMessage = ValidateName();
+                        break;
+
+                    case "Price":
+                        errorMessage = ValidatePrice();
+                        break;
+
+                    case "PowerConsumption":
+                        errorMessage = ValidatePowerComsumption();
+                        break;
+
+                    case "Info":
+                        errorMessage = ValidateÌnfo();
+                        break;
+
+                    case "ConnectionType":
+                        if (string.IsNullOrEmpty(ConnectionType))
+                            errorMessage = "Enter connection";
+                        else if (ConnectionType.Trim() == string.Empty)
+                            errorMessage = "Enter valid socket";
+                        else
+                        {
+                            HardDriveConnectionEnum tempConn;
+                            if (!Enum.TryParse(ConnectionType, out tempConn))
+                                errorMessage = "Invalid connection type";
+                        }
+                        break;
+                    case "HdType":
+                        if (string.IsNullOrEmpty(HdType))
+                            errorMessage = "Enter hard drive type";
+                        else if (HdType.Trim() == string.Empty)
+                            errorMessage = "Enter valid hard drive type";
+                        else
+                        {
+                            HardDriveTypeEnum tempType;
+                            if (!Enum.TryParse(HdType, out tempType))
+                                errorMessage = "Invalid hard drive type";
+                        }
+                        break;
+                    case "Capacity":
+                        if (string.IsNullOrEmpty(Capacity))
+                            errorMessage = "Enter capacity";
+                        else if (Capacity.Trim() == string.Empty)
+                            errorMessage = "Enter valid capacity";
+                        else
+                        {
+                            double tempCapacity;
+                            if (!Double.TryParse(Capacity, out tempCapacity))
+                                errorMessage = "Invalid number format";
+                        }
+                        break;
+
+                }
+                return errorMessage;
+            }
+        }
+        #endregion validation
+    }
+
+}

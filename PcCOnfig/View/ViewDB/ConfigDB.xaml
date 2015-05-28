@@ -1,0 +1,142 @@
+﻿<Window x:Class="PcCOnfig.View.ViewDB.ConfigDb"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Edit Database of Components" 
+        MinHeight="600"
+        Icon="/Resources/icon.png"
+        WindowStartupLocation="CenterScreen">
+    <Window.Background>
+        <ImageBrush ImageSource="/Resources/background.png" />
+    </Window.Background>
+    <Window.Resources>
+        <TransformGroup x:Key="TransformGroup">
+            <ScaleTransform ScaleX="1" ScaleY="1" CenterX="50" CenterY="25" />
+        </TransformGroup>
+        <Style x:Key="BtnStyle" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Height" Value="60"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Padding" Value="8,4" />
+            <Setter Property="Margin" Value="4" />
+            <Setter Property="RenderTransform" Value="{StaticResource TransformGroup}"/>
+                
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="Button.Click">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Button.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+                                    <SplineDoubleKeyFrame KeyTime="0:0:00.0" Value="1.0" />
+                                    <SplineDoubleKeyFrame KeyTime="0:0:00.25" Value="1.3" />
+                                    <SplineDoubleKeyFrame KeyTime="0:0:00.5" Value="1.0" />
+                                </DoubleAnimationUsingKeyFrames>
+
+                                <!-- ScaleY -->
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Button.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+                                    <SplineDoubleKeyFrame KeyTime="0:0:00.0" Value="1.0" />
+                                    <SplineDoubleKeyFrame KeyTime="0:0:00.25" Value="1.3" />
+                                    <SplineDoubleKeyFrame KeyTime="0:0:00.5" Value="1.0" />
+                                </DoubleAnimationUsingKeyFrames>
+
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                    </EventTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <ContentPresenter Grid.Column="1" Content="{Binding CurrentView}"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        <StackPanel  Grid.Column="0">
+            <StackPanel.Background>
+                <ImageBrush ImageSource="/Resources/tint.png" />
+            </StackPanel.Background>
+            <Button Command="{Binding ShowCpuView}" Style="{StaticResource BtnStyle}" Background="{Binding BtnColorBrushes[0]}">
+                <Image Source="/Resources/cpu.png" Grid.Row="0" />
+                <Button.ToolTip>
+                    <ToolTip>
+                        <StackPanel>
+                            <TextBlock FontWeight="Bold">Cpus Database</TextBlock>
+                            <TextBlock>Click to show or add Cpus in database.</TextBlock>
+                        </StackPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button Command="{Binding ShowRamView}" Style="{StaticResource BtnStyle}" Background="{Binding BtnColorBrushes[1]}">
+                <Image Source="/Resources/memory.png" Grid.Row="0" />
+                <Button.ToolTip>
+                    <ToolTip>
+                        <StackPanel>
+                            <TextBlock FontWeight="Bold">Ram Database</TextBlock>
+                            <TextBlock>Click to show or add Ram in database.</TextBlock>
+                        </StackPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button Command="{Binding ShowMotherboardView}" Style="{StaticResource BtnStyle}" Background="{Binding BtnColorBrushes[2]}">
+                <Image Source="/Resources/motherboard.png" Grid.Row="0" />
+                <Button.ToolTip>
+                    <ToolTip>
+                        <StackPanel>
+                            <TextBlock FontWeight="Bold">Motherboard Database</TextBlock>
+                            <TextBlock>Click to show or add Motherboard in database.</TextBlock>
+                        </StackPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button Command="{Binding ShowHddView}" Style="{StaticResource BtnStyle}" Background="{Binding BtnColorBrushes[3]}">
+                <Image Source="/Resources/hardDrive.png" Grid.Row="0" />
+                <Button.ToolTip>
+                    <ToolTip>
+                        <StackPanel>
+                            <TextBlock FontWeight="Bold">Hard Drive Database</TextBlock>
+                            <TextBlock>Click to show or add Hard Drive in database.</TextBlock>
+                        </StackPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button Command="{Binding ShowPowerSuppliesView}" Style="{StaticResource BtnStyle}" Background="{Binding BtnColorBrushes[4]}">
+                <Image Source="/Resources/power.png" Grid.Row="0" />
+                <Button.ToolTip>
+                    <ToolTip>
+                        <StackPanel>
+                            <TextBlock FontWeight="Bold">Power Supply Database</TextBlock>
+                            <TextBlock>Click to show or add Power Supply in database.</TextBlock>
+                        </StackPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+
+            <Button Command="{Binding ShowGraphicCardView}" Style="{StaticResource BtnStyle}" Background="{Binding BtnColorBrushes[5]}">
+                <Image Source="/Resources/graphic_card.png" Grid.Row="0" />
+                <Button.ToolTip>
+                    <ToolTip>
+                        <StackPanel>
+                            <TextBlock FontWeight="Bold">Graphic Card Database</TextBlock>
+                            <TextBlock>Click to show or add Graphic Cards in database.</TextBlock>
+                        </StackPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button Command="{Binding ShowBoxView}" Style="{StaticResource BtnStyle}" Background="{Binding BtnColorBrushes[6]}">
+                <Image Source="/Resources/pcbox.png" Grid.Row="0" />
+                <Button.ToolTip>
+                    <ToolTip>
+                        <StackPanel>
+                            <TextBlock FontWeight="Bold">PC Box Database</TextBlock>
+                            <TextBlock>Click to show or add box in database.</TextBlock>
+                        </StackPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+        </StackPanel>
+    </Grid>
+
+</Window>
