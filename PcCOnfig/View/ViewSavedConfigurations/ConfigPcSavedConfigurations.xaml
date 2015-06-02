@@ -6,6 +6,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="700"
              Icon="/Resources/icon.png"
+             Title="Saved Computer Configurations"
              WindowStartupLocation="CenterScreen">
     <Window.Background>
         <ImageBrush ImageSource="/Resources/background.png" />

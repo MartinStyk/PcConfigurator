@@ -116,6 +116,7 @@ namespace PcCOnfig.ViewModel.ViewModelDB
             {
                 return;
             }
+            cpu.Architecture = arch;
 
             using (var db = new ComponentContext())
             {

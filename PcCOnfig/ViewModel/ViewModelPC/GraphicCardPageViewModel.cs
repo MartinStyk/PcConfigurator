@@ -46,6 +46,8 @@ namespace PcCOnfig.ViewModel.ViewModelPC
         private void Deselect()
         {
             SelectedItem = null;
+            Configuration.GraphicCard = null;
+            Configuration.GraphicCardId = null;
         }
     }
 }
